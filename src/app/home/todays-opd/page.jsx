@@ -50,10 +50,12 @@ const TodaysQueryPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-700 p-6">
+  
+<div className="min-h-screen bg-gray-100 dark:bg-[#ffffff]/7 p-6">
+
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-8">
-          Today's OPDs
+          Welcome to Oritto LED Lights 
         </h1>
         <div className="overflow-x-auto rounded-lg shadow-lg">
           <table className="min-w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
