@@ -4,9 +4,11 @@ import apiClient from "./axios";
 
 export const getAllTodaysOPDCamps = async () => {
   try {
-    const res = await apiClient.get(`${process.env.NEXT_PUBLIC_BASE_URL}/opds/todays-opdcamps`);
+    const res = await apiClient.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/opds/todays-opdcamps`
+    );
     console.log("Todays data", res.data);
-    
+
     return res.data;
   } catch (err) {
     throw err;
@@ -37,7 +39,10 @@ export const getAllPreviousOPDCamps = async () => {
 
 export const getUserLoggedIn = async (data) => {
   try {
-    const res = await apiClient.post(`/api/auth/login`, data);
+    const res = await apiClient.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/login`,
+      data
+    );
     return res.data;
   } catch (err) {
     throw err;
@@ -72,28 +77,28 @@ export const getAllCoupons = async (data) => {
 };
 
 export const getRegisteredPatients = async (data) => {
-  try{
-    const res = await apiClient.get('/registered-patients', data);
+  try {
+    const res = await apiClient.get("/registered-patients", data);
     return res.data;
-  }catch(err){
+  } catch (err) {
     throw err;
   }
-}
+};
 
-export const getRegisteredClinics = async(data) => {
+export const getRegisteredClinics = async (data) => {
   try {
-    const res = await apiClient.get('/registered-clinics', data);
-    return res.data; 
+    const res = await apiClient.get("/registered-clinics", data);
+    return res.data;
   } catch (error) {
     throw error;
   }
-}
+};
 
-export const getBlogs = async(data) => {
+export const getBlogs = async (data) => {
   try {
-    const res = await apiClient.get('/blogs/getAllBlogs', data);
+    const res = await apiClient.get("/blogs/getAllBlogs", data);
     return res.data;
   } catch (error) {
     throw err;
   }
-}
+};

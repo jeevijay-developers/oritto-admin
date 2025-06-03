@@ -22,7 +22,7 @@ const NAV_BUTTONS = [
     key: "products",
     label: "Products",
     newHref: "/products/new",
-    viewHref: "/products/view",
+    viewHref: "/home/products",
   },
 
   {
