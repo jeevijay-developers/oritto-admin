@@ -163,6 +163,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
+
           <div className="flex md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -210,7 +211,7 @@ const Navbar = () => {
                         className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
                         style={{
                           background:
-                            "linear-gradient(90deg, rgba(244, 67, 54, 0.03) 0%, rgba(255, 152, 0, 0.03) 100%);",
+                            "linear-gradient(90deg, #f4433608 0%, #ff980008 100%)",
                         }}
                       >
                         New
