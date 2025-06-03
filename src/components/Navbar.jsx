@@ -9,7 +9,7 @@ const NAV_BUTTONS = [
     key: "category",
     label: "Category",
     newHref: "/category/new",
-    viewHref: "/category/view",
+    viewHref: "/view-categories",
   },
 
   {

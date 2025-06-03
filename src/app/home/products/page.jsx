@@ -14,6 +14,7 @@ const columns = [
 ];
 
 import products from "@/data/products";
+import { useRouter } from "next/navigation";
 
 const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString("en-GB");
 
@@ -28,6 +29,7 @@ const TodaysQueryPage = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
+  const router = useRouter();
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -115,7 +117,12 @@ const TodaysQueryPage = () => {
                     </td>
                     <td className="px-6 py-4 text-center">{row.application}</td>
                     <td className="px-6 py-4 text-center">
-                      <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2 px-4 rounded-full transition duration-300">
+                      <button
+                        onClick={() =>
+                          router.push(`/product-update/${row.slug}`)
+                        }
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2 px-4 rounded-full transition duration-300"
+                      >
                         Update
                       </button>
                     </td>
