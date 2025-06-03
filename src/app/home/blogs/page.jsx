@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import Pagination from "@/components/Pagination";
 import { X } from "lucide-react";
-import { getBlogs } from "@/server/common";
+import { getBlogs } from "../../../server/common";
 
 
 const BlogTable = () => {

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "@/server/axios";
 import { toast } from "react-toast";
-import { getAllCoupons } from "@/server/common";
+import { getAllCoupons } from "../../server/common";
 
 const columns = [
   { key: "coupon", label: "Coupon Name" },
