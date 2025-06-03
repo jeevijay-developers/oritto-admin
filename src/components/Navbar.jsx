@@ -128,6 +128,7 @@ const Navbar = () => {
                 )}
               </div>
             ))}
+            
             {/* Logout Button */}
             <button
               onClick={() => setIsModalOpen(true)}
