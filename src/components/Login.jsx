@@ -26,19 +26,34 @@ const Login = () => {
       setError("Please enter both username and password.");
       return;
     }
+    if(form.username === "admin@gmail.com" && form.password === "password") {
+      toast.success("Login successful!");
+      router.push("/home/todays-opd");
+      localStorage.setItem(
+        "lnp-landing-admin-page",
+        JSON.stringify({ role: "admin" })
+      );
+      return;
+    }
 
     // TODO: Add authentication logic here
-    getUserLoggedIn({ email: form.username, password: form.password })
-      .then((res) => {
-        // if (res.user.role === "admin") {
-        toast.success("Login successful!");
-        router.push("/home/products");
-        localStorage.setItem("oritto-electric", JSON.stringify(res.user));
-      })
-      .catch((err) => {
-        setError(err.message);
-        console.log(err);
-      });
+    // getUserLoggedIn({ email: form.username, password: form.password })
+    //   .then((res) => {
+    //     if (res.user.role === "admin") {
+    //       toast.success("Login successful!");
+    //       router.push("/home/todays-query");
+    //       localStorage.setItem(
+    //         "lnp-landing-admin-page",
+    //         JSON.stringify(res.user)
+    //       );
+    //     } else {
+    //       toast.error("Login failed!");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     setError(err.message);
+    //     console.log(err);
+    //   });
   };
 
   return (
