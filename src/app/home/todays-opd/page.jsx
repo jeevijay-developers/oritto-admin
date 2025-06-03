@@ -64,7 +64,7 @@ const TodaysQueryPage = () => {
                 {columns.map((col) => (
                   <th
                     key={col.key}
-                    className="px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-blue-200 dark:bg-gray-900 text-center text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300"
+                    className="px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-300 dark:bg-gray-900 text-center text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300"
                   >
                     {col.label}
                   </th>

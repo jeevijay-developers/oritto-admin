@@ -42,6 +42,9 @@ const Navbar = () => {
 
   const [mobileActiveMenu, setMobileActiveMenu] = useState(null);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [applicationImagePreview, setApplicationImagePreview] = useState(null);
+  const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -66,14 +69,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-200 dark:bg-gray-900 shadow-md rounded-b-xl">
+    <nav className="bg-gray-800 dark:bg-gray-900 shadow-md">
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-2">
         <div className="flex justify-between h-16 items-center">
           {/* Logo Section */}
           <div className="w-[140px] h-[80px] flex items-center">
             <img
               className="w-full h-full object-contain"
-              src="/image 4.png"
+              src="/image 4.0.png"
               alt="oritto-logo"
             />
           </div>
@@ -105,14 +108,33 @@ const Navbar = () => {
                     {btn.key === "category" ? (
                       <button
                         onClick={() => setIsFormModalOpen(true)}
-                        className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 border-b border-orange-300"
+                        className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, #f4433608 0%, #ff980008 100%)",
+                        }}
+                      >
+                        New
+                      </button>
+                    ) : btn.key === "application" ? (
+                      <button
+                        onClick={() => setIsApplicationFormOpen(true)}
+                        className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, #f4433608 0%, #ff980008 100%)",
+                        }}
                       >
                         New
                       </button>
                     ) : (
                       <a
                         href={btn.newHref}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 border-b border-orange-300"
+                        className="block w-full px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, #f4433608 0%, #ff980008 100%)",
+                        }}
                       >
                         New
                       </a>
@@ -184,7 +206,18 @@ const Navbar = () => {
                   <div className="bg-gray-100 dark:bg-[#23272f] rounded-lg overflow-hidden mt-1">
                     {btn.key === "category" ? (
                       <button
-                        onClick={() => setIsFormModalOpen(true)} // <- open your modal
+                        onClick={() => setIsFormModalOpen(true)}
+                        className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, rgba(244, 67, 54, 0.03) 0%, rgba(255, 152, 0, 0.03) 100%);",
+                        }}
+                      >
+                        New
+                      </button>
+                    ) : btn.key === "application" ? (
+                      <button
+                        onClick={() => setIsApplicationFormOpen(true)}
                         className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
                         style={{
                           background:
@@ -260,6 +293,120 @@ const Navbar = () => {
         </div>
       )}
 
+      {isApplicationFormOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/70 bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 shadow-lg w-full max-w-sm">
+            <h2 className="text-lg text-black font-semibold mb-4">
+              Add New Application
+            </h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const name = e.target.elements.name.value;
+                const image = e.target.elements.applicationImage.files[0];
+                // Add more fields as needed
+                console.log("Application Name:", name);
+                console.log("Image:", image);
+                setIsApplicationFormOpen(false);
+                setApplicationImagePreview(null);
+              }}
+            >
+              <label className="block mb-4">
+                <span className="text-gray-700">Name</span>
+                <input
+                  name="name"
+                  required
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-orange-300"
+                />
+              </label>
+              <label className="block mb-4">
+                <span className="text-gray-700">Image</span>
+                <div
+                  className="w-full h-48 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 relative transition hover:border-orange-400"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    document.getElementById("application-image-input").click()
+                  }
+                >
+                  {applicationImagePreview ? (
+                    <img
+                      src={applicationImagePreview}
+                      alt="Preview"
+                      className="max-h-full max-w-full object-contain rounded"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center">
+                      <svg
+                        width="48"
+                        height="48"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <rect width="24" height="24" rx="4" fill="#e5e7eb" />
+                        <path
+                          d="M12 8v8m0 0l-3-3m3 3l3-3"
+                          stroke="#a3a3a3"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <button
+                        type="button"
+                        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition"
+                      >
+                        Choose Image
+                      </button>
+                      <span className="mt-2 text-gray-400 text-sm">
+                        or, drop the file here
+                      </span>
+                      <span className="mt-1 text-gray-400 text-xs">
+                        Maximum file size: 5MB
+                      </span>
+                    </div>
+                  )}
+                  <input
+                    id="application-image-input"
+                    name="applicationImage"
+                    type="file"
+                    accept="image/*"
+                    required
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    style={{ width: "100%", height: "100%" }}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setApplicationImagePreview(URL.createObjectURL(file));
+                      } else {
+                        setApplicationImagePreview(null);
+                      }
+                    }}
+                    tabIndex={-1}
+                  />
+                </div>
+              </label>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsApplicationFormOpen(false);
+                    setApplicationImagePreview(null);
+                  }}
+                  className="mr-2 px-4 py-2 rounded-md text-gray-700 bg-gray-300 hover:bg-gray-400 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-md text-white bg-orange-500 hover:bg-orange-600 transition"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       {isFormModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/70 bg-opacity-50">
           <div className="bg-white rounded-lg p-6 shadow-lg w-full max-w-sm">
@@ -274,6 +421,7 @@ const Navbar = () => {
                 console.log("Submitted Name:", name);
                 console.log("Submitted Image:", image); // Replace with API later
                 setIsFormModalOpen(false);
+                setImagePreview(null);
               }}
             >
               <label className="block mb-4">
@@ -286,18 +434,77 @@ const Navbar = () => {
               </label>
               <label className="block mb-4">
                 <span className="text-gray-700">Image</span>
-                <input
-                  name="image"
-                  type="file"
-                  accept="image/*"
-                  required
-                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-orange-300"
-                />
+                <div
+                  className="w-full h-48 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 relative transition hover:border-orange-400"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    document.getElementById("category-image-input").click()
+                  }
+                >
+                  {imagePreview ? (
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="max-h-full max-w-full object-contain rounded"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center">
+                      <svg
+                        width="48"
+                        height="48"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <rect width="24" height="24" rx="4" fill="#e5e7eb" />
+                        <path
+                          d="M12 8v8m0 0l-3-3m3 3l3-3"
+                          stroke="#a3a3a3"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <button
+                        type="button"
+                        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition"
+                      >
+                        Choose Image
+                      </button>
+                      <span className="mt-2 text-gray-400 text-sm">
+                        or, drop the file here
+                      </span>
+                      <span className="mt-1 text-gray-400 text-xs">
+                        Maximum file size: 5MB
+                      </span>
+                    </div>
+                  )}
+                  <input
+                    id="category-image-input"
+                    name="image"
+                    type="file"
+                    accept="image/*"
+                    required
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    style={{ width: "100%", height: "100%" }}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setImagePreview(URL.createObjectURL(file));
+                      } else {
+                        setImagePreview(null);
+                      }
+                    }}
+                    tabIndex={-1}
+                  />
+                </div>
               </label>
               <div className="flex justify-end">
                 <button
                   type="button"
-                  onClick={() => setIsFormModalOpen(false)}
+                  onClick={() => {
+                    setIsFormModalOpen(false);
+                    setImagePreview(null);
+                  }}
                   className="mr-2 px-4 py-2 rounded-md text-gray-700 bg-gray-300 hover:bg-gray-400 transition"
                 >
                   Cancel
