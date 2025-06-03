@@ -128,7 +128,7 @@ const Navbar = () => {
                 )}
               </div>
             ))}
-            
+
             {/* Logout Button */}
             <button
               onClick={() => setIsModalOpen(true)}
@@ -157,7 +157,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
@@ -271,7 +270,9 @@ const Navbar = () => {
               onSubmit={(e) => {
                 e.preventDefault();
                 const name = e.target.elements.name.value;
-                console.log("Submitted Name:", name); // Replace with API later
+                const image = e.target.elements.image.files[0];
+                console.log("Submitted Name:", name);
+                console.log("Submitted Image:", image); // Replace with API later
                 setIsFormModalOpen(false);
               }}
             >
@@ -279,6 +280,16 @@ const Navbar = () => {
                 <span className="text-gray-700">Name</span>
                 <input
                   name="name"
+                  required
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-orange-300"
+                />
+              </label>
+              <label className="block mb-4">
+                <span className="text-gray-700">Image</span>
+                <input
+                  name="image"
+                  type="file"
+                  accept="image/*"
                   required
                   className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-orange-300"
                 />
