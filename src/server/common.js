@@ -48,6 +48,21 @@ export const getUserLoggedIn = async (data) => {
     throw err;
   }
 };
+export const verifyToken = async (token) => {
+  try {
+    const res = await apiClient.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/varify-token`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
 export const getProductsBySlug = async (slug) => {
   try {
     const res = await apiClient.get(`/v1/products/product/by-slug/${slug}`);

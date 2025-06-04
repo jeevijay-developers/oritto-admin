@@ -1,5 +1,5 @@
 "use client";
-import { getUserLoggedIn } from "../server/common";
+import { getUserLoggedIn, verifyToken } from "../server/common";
 import { useRouter } from "next/navigation";
 import React, { use, useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toast";
@@ -15,8 +15,23 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("lnp-landing-admin-page")) {
-      router.push("/home/todays-opd");
+    if (localStorage.getItem("oritto-electric")) {
+      const TOKEN = localStorage.getItem("oritto-electric");
+      console.log(TOKEN);
+
+      if (!TOKEN) {
+        toast.warn("Please login first");
+      }
+
+      const verification = JSON.parse(TOKEN);
+      verifyToken(verification)
+        .then((res) => {
+          router.push("/home/products");
+        })
+        .catch((err) => {
+          toast.warn("Please login first");
+        });
+      // router.push("/home/todays-opd");
     }
   }, []);
 
@@ -36,13 +51,15 @@ const Login = () => {
     //   return;
     // }
 
-       // TODO: Add authentication logic here
+    // TODO: Add authentication logic here
     getUserLoggedIn({ email: form.username, password: form.password })
       .then((res) => {
         // if (res.user.role === "admin") {
         toast.success("Login successful!");
-        router.push("/home/products");
-        localStorage.setItem("oritto-electric", JSON.stringify(res.user));
+        // router.push("/home/products");
+        // console.log(res);
+
+        localStorage.setItem("oritto-electric", JSON.stringify(res.token));
       })
       .catch((err) => {
         setError(err.message);
