@@ -6,6 +6,12 @@ import { FaChevronDown } from "react-icons/fa";
 
 const NAV_BUTTONS = [
   {
+    key: "query",
+    label: "Query",
+    newHref: "/view-product-query",
+    viewHref: "/view-product-query",
+  },
+  {
     key: "category",
     label: "Category",
     newHref: "/category/new",
