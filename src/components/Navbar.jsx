@@ -127,7 +127,9 @@ const Navbar = () => {
                       >
                         New
                       </button>
-                    ) : (
+                    ) : btn.key === "query" ? (
+                     <></>
+                    ) :(
                       <a
                         href={btn.newHref}
                         className="block w-full px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition bg-gradient-to-r "
