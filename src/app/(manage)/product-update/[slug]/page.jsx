@@ -1,7 +1,13 @@
 import React from "react";
+import UpdateProduct from "../../../../components/admin/products/UpdateProduct";
 
 const Page = async ({ params }) => {
-  return <div>{params.slug}</div>;
+  const { slug } = await params;
+  return (
+    <div>
+      <UpdateProduct slug={slug} />{" "}
+    </div>
+  );
 };
 
 export default Page;

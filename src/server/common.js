@@ -2,45 +2,90 @@ import apiClient from "./axios";
 
 // const query = process.env.NEXT_PUBLIC_API_URL_LOCAL;
 
-export const getAllTodaysOPDCamps = async () => {
-  try {
-    const res = await apiClient.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/opds/todays-opdcamps`
-    );
-    console.log("Todays data", res.data);
+// export const getAllTodaysOPDCamps = async () => {
+//   try {
+//     const res = await apiClient.get(
+//       `${process.env.NEXT_PUBLIC_BASE_URL}/opds/todays-opdcamps`
+//     );
+//     console.log("Todays data", res.data);
 
-    return res.data;
-  } catch (err) {
-    throw err;
-  }
-};
+//     return res.data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
 
-export const getAllNextOPDs = async () => {
-  try {
-    const res = await apiClient.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/opds/opdcamps/next`
-    );
-    return res.data;
-  } catch (err) {
-    throw err;
-  }
-};
+// export const getAllNextOPDs = async () => {
+//   try {
+//     const res = await apiClient.get(
+//       `${process.env.NEXT_PUBLIC_BASE_URL}/opds/opdcamps/next`
+//     );
+//     return res.data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
 
-export const getAllPreviousOPDCamps = async () => {
-  try {
-    const res = await apiClient.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/opds/opdcamps/previous-all`
-    );
-    return res.data;
-  } catch (err) {
-    throw err;
-  }
-};
+// export const getAllPreviousOPDCamps = async () => {
+//   try {
+//     const res = await apiClient.get(
+//       `${process.env.NEXT_PUBLIC_BASE_URL}/opds/opdcamps/previous-all`
+//     );
+//     return res.data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
 
 export const getUserLoggedIn = async (data) => {
   try {
     const res = await apiClient.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/login`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+export const getProductsBySlug = async (slug) => {
+  try {
+    const res = await apiClient.get(`/v1/products/product/by-slug/${slug}`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+export const getProductsByCategoryId = async (id) => {
+  try {
+    const res = await apiClient.get(`/v1/categories/get-category-by-id/${id}`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+export const getProductsByApplicationId = async (id) => {
+  try {
+    const res = await apiClient.get(
+      `/v1/applications/get-application-by-id/${id}`
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+export const getAllProducts = async () => {
+  try {
+    const res = await apiClient.get(`/v1/products/all-products`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+export const updateProductBySlug = async (slug, data) => {
+  try {
+    const res = await apiClient.put(
+      `/v1/products/product/update/${slug}`,
       data
     );
     return res.data;

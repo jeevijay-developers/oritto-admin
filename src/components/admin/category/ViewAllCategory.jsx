@@ -1,6 +1,8 @@
 "use client";
 import { getAllCategories } from "../../../server/admin";
 import React, { useEffect, useState } from "react";
+import NotFound from "../../NotFound";
+import { useRouter } from "next/navigation";
 
 const ViewAllCategory = () => {
   const [category, setCategory] = useState([]);
@@ -15,10 +17,14 @@ const ViewAllCategory = () => {
       });
   }, []);
 
+  const router = useRouter();
   const handleUpdate = (id) => {
-    console.log("Update category with ID:", id);
-    // You can redirect or open a modal here
+    router.push(`/view-cate-prods/${id}`);
   };
+
+  if (!category || category.length === 0) {
+    return <NotFound message="Opps!!! No categories found 😰😰" />;
+  }
 
   return (
     <div className="overflow-x-auto p-4">
@@ -52,7 +58,7 @@ const ViewAllCategory = () => {
                   onClick={() => handleUpdate(item._id)}
                   className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
                 >
-                  Update
+                  View Products
                 </button>
               </td>
             </tr>

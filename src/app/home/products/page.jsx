@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllTodaysOPDCamps } from "../../../server/common";
+import { getAllProducts } from "../../../server/common";
 import { ClipLoader } from "react-spinners";
 import Pagination from "../../../components/Pagination";
 
@@ -8,51 +8,51 @@ const columns = [
   { key: "index", label: "Sr No." },
   { key: "name", label: "Name" },
   { key: "price", label: "Price" },
-  { key: "categoryName", label: "Category" },
-  { key: "application", label: "Application" },
+  // { key: "categoryName", label: "Category" },
+  // { key: "application", label: "Application" },
   { key: "actions", label: "Action" },
 ];
 
-import products from "../../../data/products";
+// import products from "../../../data/products";
 import { useRouter } from "next/navigation";
 
-const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString("en-GB");
+// const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString("en-GB");
 
 const TodaysQueryPage = () => {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // You can adjust this number
-
-  // Calculate pagination variables
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
   const router = useRouter();
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   useEffect(() => {
     setLoading(true);
-    getAllTodaysOPDCamps()
+    getAllProducts()
       .then((res) => {
-        setData(res);
+        setProducts(res);
       })
       .catch((err) => {
         console.error(err);
       })
       .finally(() => setLoading(false));
   }, []);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [itemsPerPage] = useState(5); // You can adjust this number
 
-  const formatTime = (time) => {
-    if (!time) return "";
-    const [hours, minutes] = time.split(":");
-    const hour = parseInt(hours, 10);
-    const period = hour >= 12 ? "PM" : "AM";
-    const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-    return `${displayHour}:${minutes} ${period}`;
-  };
+  // Calculate pagination variables
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // const formatTime = (time) => {
+  //   if (!time) return "";
+  //   const [hours, minutes] = time.split(":");
+  //   const hour = parseInt(hours, 10);
+  //   const period = hour >= 12 ? "PM" : "AM";
+  //   const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+  //   return `${displayHour}:${minutes} ${period}`;
+  // };
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-[#ffffff0f] p-6">
@@ -112,10 +112,10 @@ const TodaysQueryPage = () => {
                     </td>
                     <td className="px-6 py-4 text-center">{row.name}</td>
                     <td className="px-6 py-4 text-center">₹{row.price}</td>
-                    <td className="px-6 py-4 text-center">
+                    {/* <td className="px-6 py-4 text-center">
                       {row.categoryName}
                     </td>
-                    <td className="px-6 py-4 text-center">{row.application}</td>
+                    <td className="px-6 py-4 text-center">{row.application}</td> */}
                     <td className="px-6 py-4 text-center">
                       <button
                         onClick={() =>
@@ -123,7 +123,7 @@ const TodaysQueryPage = () => {
                         }
                         className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2 px-4 rounded-full transition duration-300"
                       >
-                        Update
+                        View or Update
                       </button>
                     </td>
                   </tr>
@@ -133,14 +133,14 @@ const TodaysQueryPage = () => {
           </table>
         </div>
 
-        <div className="mt-10">
+        {/* <div className="mt-10">
           <Pagination
             usersPerPage={itemsPerPage}
             totalUsers={data.length}
             paginate={paginate}
             currentPage={currentPage}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );
