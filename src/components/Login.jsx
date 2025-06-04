@@ -56,7 +56,7 @@ const Login = () => {
       .then((res) => {
         // if (res.user.role === "admin") {
         toast.success("Login successful!");
-        // router.push("/home/products");
+        router.push("/home/products");
         // console.log(res);
 
         localStorage.setItem("oritto-electric", JSON.stringify(res.token));
