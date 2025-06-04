@@ -1,6 +1,8 @@
 "use client";
 import { getAllApplications } from "../../../server/admin";
 import React, { useEffect, useState } from "react";
+import NotFound from "../../NotFound";
+import { useRouter } from "next/navigation";
 
 const ViewAllApplications = () => {
   const [application, setApplication] = useState([]);
@@ -15,16 +17,13 @@ const ViewAllApplications = () => {
       });
   }, []);
 
+  const router = useRouter();
   const handleUpdate = (id) => {
-    console.log("Update category with ID:", id);
-    // You can redirect or open a modal here
+    router.push(`/view-app-prods/${id}`);
   };
-  if (application && application.length === 0)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        No applications found
-      </div>
-    );
+  if (application && application.length === 0) {
+    return <NotFound message="Opps!!! No Applications found 😰😰" />;
+  }
   return (
     <div>
       <div className="overflow-x-auto p-4">
@@ -64,7 +63,7 @@ const ViewAllApplications = () => {
                     onClick={() => handleUpdate(item._id)}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
                   >
-                    Update
+                    View Products list
                   </button>
                 </td>
               </tr>
