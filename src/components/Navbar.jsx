@@ -33,12 +33,12 @@ const NAV_BUTTONS = [
     viewHref: "/home/products",
   },
 
-  {
-    key: "blogs",
-    label: "Blogs",
-    newHref: "/home/create-blog",
-    viewHref: "/blogs/view",
-  },
+  // {
+  //   key: "blogs",
+  //   label: "Blogs",
+  //   newHref: "/home/create-blog",
+  //   viewHref: "/blogs/view",
+  // },
 ];
 
 const Navbar = () => {
