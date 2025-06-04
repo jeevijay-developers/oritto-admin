@@ -16,7 +16,7 @@ const NAV_BUTTONS = [
     key: "application",
     label: "Application",
     newHref: "/application/new",
-    viewHref: "/application/view",
+    viewHref: "/view-applications",
   },
   {
     key: "products",
