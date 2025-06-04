@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import Pagination from "../../../components/Pagination";
+
 import { getRegisteredClinics } from "../../../server/common";
 
 const columns = [
