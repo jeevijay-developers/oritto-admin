@@ -162,3 +162,13 @@ export const getBlogs = async (data) => {
     throw err;
   }
 };
+export const getAllProductQuery = async (page = 1, limit = 5) => {
+  try {
+    const res = await apiClient.get(
+      `/v1/query/get-all-products?page=${page}&limit=${limit}`
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
