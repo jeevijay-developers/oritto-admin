@@ -1,5 +1,5 @@
 "use client";
-import { uploadSingleCoupon } from "@/server/common";
+import { uploadSingleCoupon } from "../../server/common";
 // import { uploadBulkCoupon } from "@/server/common";
 import React, { useState } from "react";
 import { toast } from "react-toast";

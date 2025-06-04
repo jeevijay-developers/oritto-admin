@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllTodaysOPDCamps } from "@/server/common";
+import { getAllTodaysOPDCamps } from "../../../server/common";
 import { ClipLoader } from "react-spinners";
-import Pagination from "@/components/Pagination";
+import Pagination from "../../../components/Pagination";
 
 const columns = [
   { key: "index", label: "Sr No." },
@@ -13,7 +13,7 @@ const columns = [
   { key: "actions", label: "Action" },
 ];
 
-import products from "@/data/products";
+import products from "../../../data/products";
 import { useRouter } from "next/navigation";
 
 const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString("en-GB");

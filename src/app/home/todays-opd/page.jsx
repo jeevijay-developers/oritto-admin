@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllTodaysOPDCamps } from "@/server/common";
+// import { getAllTodaysOPDCamps } from "../../server/common";
 import { ClipLoader } from "react-spinners";
 import Pagination from "@/components/Pagination";
+import { getAllTodaysOPDCamps } from "../../../server/common";
 
 const columns = [
   { key: "image", label: "" },

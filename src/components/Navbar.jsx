@@ -104,45 +104,32 @@ const Navbar = () => {
                   />
                 </button>
                 {activeDropdown === btn.key && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 py-1 border border-gray-200">
+                  <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-10 py-1 border border-gray-200 dark:border-gray-700">
                     {btn.key === "category" ? (
                       <button
                         onClick={() => setIsFormModalOpen(true)}
-                        className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, #f4433608 0%, #ff980008 100%)",
-                        }}
+                        className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition bg-gradient-to-r "
                       >
                         New
                       </button>
                     ) : btn.key === "application" ? (
                       <button
                         onClick={() => setIsApplicationFormOpen(true)}
-                        className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, #f4433608 0%, #ff980008 100%)",
-                        }}
+                        className="block w-full text-left px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition bg-gradient-to-r "
                       >
                         New
                       </button>
                     ) : (
                       <a
                         href={btn.newHref}
-                        className="block w-full px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, #f4433608 0%, #ff980008 100%)",
-                        }}
+                        className="block w-full px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition bg-gradient-to-r "
                       >
                         New
                       </a>
                     )}
-
                     <a
                       href={btn.viewHref}
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                      className="block w-full px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white hover:bg-orange-50 dark:hover:bg-orange-900/30 transition"
                     >
                       View
                     </a>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllPreviousOPDCamps } from "@/server/common";
+import { getAllPreviousOPDCamps } from "../../../server/common";
 import { ClipLoader } from "react-spinners";
 import Pagination from "@/components/Pagination";
 import { MdDelete } from "react-icons/md";
