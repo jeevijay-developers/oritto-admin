@@ -62,13 +62,15 @@ const ViewProductQuery = () => {
               <td className="border border-gray-300 px-4 py-2">
                 {currentPage * limit + index + 1}
               </td>
-              <td className="border border-gray-300 px-4 py-2 ">{item.name}</td>
+              <td className="border border-gray-300 px-4 py-2 text-nowrap">
+                {item.name}
+              </td>
               <td className="border border-gray-300 px-4 py-2">{item.email}</td>
               <td className="border border-gray-300 px-4 py-2">{item.phone}</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 px-4 py-2 text-nowrap">
                 {item.productName}
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 px-4 py-2 text-nowrap">
                 {new Date(item.submittedAt).toLocaleString("en-IN", {
                   day: "2-digit",
                   month: "2-digit",
@@ -82,7 +84,7 @@ const ViewProductQuery = () => {
               <td className="border border-gray-300 px-4 py-2">
                 <button
                   onClick={() => handleUpdate(item._id)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded "
                 >
                   View Message
                 </button>
