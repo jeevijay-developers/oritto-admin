@@ -1,5 +1,7 @@
 "use client";
+import { createNewAttribute } from "@/server/admin";
 import React, { useState } from "react";
+import { toast } from "react-toast";
 
 const AttributeForm = () => {
   const [attributeName, setAttributeName] = useState("");
@@ -21,13 +23,40 @@ const AttributeForm = () => {
     setVariants(updated);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
       name: attributeName,
       varients: variants,
     };
-    console.log("Submitting:", payload);
+    try {
+      const response = await createNewAttribute(payload);
+      toast.success("Attribute created successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setAttributeName("");
+      setVariants([{ name: "", enabled: false }]); // Reset variants
+    } catch (error) {
+      console.error("Error creating attribute:", error);
+      toast.error(
+        error.response?.data?.message || "Failed to create attribute",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+    }
     // send payload to your backend API
   };
 

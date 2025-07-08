@@ -8,11 +8,11 @@ const sidebar = [
       },
       {
         name: "List Attributes",
-        path: "/admin/attributes/list-attributes",
+        path: "/home/attributes/list-attributes",
       },
       {
         name: "Manage Attributes",
-        path: "/admin/attributes/manage-attributes",
+        path: "/home/attributes/manage-attributes",
       },
     ],
   },
@@ -21,15 +21,15 @@ const sidebar = [
     links: [
       {
         name: "Add Category",
-        path: "/admin/attributes/add-attribute",
+        path: "/home/category/add-category",
       },
       {
         name: "List Categories",
-        path: "/admin/attributes/list-attributes",
+        path: "/home/category/list-category",
       },
       {
         name: "Manage Categories",
-        path: "/admin/attributes/manage-attributes",
+        path: "/home/category/manage-category",
       },
     ],
   },
@@ -38,15 +38,15 @@ const sidebar = [
     links: [
       {
         name: "Add Solutions",
-        path: "/admin/attributes/add-attribute",
+        path: "/home/solution/add-solution",
       },
       {
         name: "List Solutions",
-        path: "/admin/attributes/list-attributes",
+        path: "/home/solution/list-solution",
       },
       {
         name: "Manage Solutions",
-        path: "/admin/attributes/manage-attributes",
+        path: "/home/solution/manage-solution",
       },
     ],
   },
@@ -56,15 +56,15 @@ const sidebar = [
     links: [
       {
         name: "Add Products",
-        path: "/admin/attributes/add-attribute",
+        path: "/home/products/add-new-product",
       },
       {
         name: "List Products",
-        path: "/admin/attributes/list-attributes",
+        path: "/home/products/list-products",
       },
       {
         name: "Manage Products",
-        path: "/admin/attributes/manage-attributes",
+        path: "/home/products/manage-products",
       },
     ],
   },
@@ -73,11 +73,11 @@ const sidebar = [
     links: [
       {
         name: "List Queries",
-        path: "/admin/attributes/list-attributes",
+        path: "",
       },
       {
         name: "Manage Queries",
-        path: "/admin/attributes/manage-attributes",
+        path: "",
       },
     ],
   },
@@ -86,15 +86,15 @@ const sidebar = [
     links: [
       {
         name: "Add Blog",
-        path: "/admin/attributes/add-attribute",
+        path: "",
       },
       {
         name: "List Blogs",
-        path: "/admin/attributes/list-attributes",
+        path: "",
       },
       {
         name: "Manage Blogs",
-        path: "/admin/attributes/manage-attributes",
+        path: "",
       },
     ],
   },

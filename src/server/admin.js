@@ -45,3 +45,48 @@ export const createNewApplication = async (data) => {
     throw err;
   }
 };
+
+export const createNewAttribute = async (data) => {
+  try {
+    const res = await apiClient.post(`/v1/attributes/add-new-attribute`, data);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const getAllAttributes = async () => {
+  try {
+    const res = await apiClient.get(`/v1/attributes/get-all-attributes`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const createNewSolution = async (data) => {
+  try {
+    const res = await apiClient.post(`/v1/solutions/create-solution`, data);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const getAllSolutions = async () => {
+  try {
+    const res = await apiClient.get(`/v1/solutions/get-all-solutions`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const getAllProducts = async () => {
+  try {
+    const res = await apiClient.get(`/v1/products/all-products`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
