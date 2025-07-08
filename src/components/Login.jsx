@@ -41,15 +41,6 @@ const Login = () => {
       setError("Please enter both username and password.");
       return;
     }
-    // if(form.username === "admin@gmail.com" && form.password === "password") {
-    //   toast.success("Login successful!");
-    //   router.push("/home/todays-opd");
-    //   localStorage.setItem(
-    //     "lnp-landing-admin-page",
-    //     JSON.stringify({ role: "admin" })
-    //   );
-    //   return;
-    // }
 
     // TODO: Add authentication logic here
     getUserLoggedIn({ email: form.username, password: form.password })

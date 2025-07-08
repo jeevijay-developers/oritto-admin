@@ -55,7 +55,7 @@ const TodaysQueryPage = () => {
   // };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-[#ffffff0f] p-6">
+    <div className="min-h-screen bg-gray-100 w-full dark:bg-[#ffffff0f] p-6">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-extrabold text-blue-700 dark:text-blue-300 mb-10 text-center">
           Welcome to Oritto LED Lights
