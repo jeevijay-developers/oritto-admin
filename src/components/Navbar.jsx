@@ -5,14 +5,15 @@ import { IoLogOut } from "react-icons/io5";
 import { FaChevronDown } from "react-icons/fa";
 import AddNewCategory from "../components/admin/category/AddNewCategory";
 import AddNewApplication from "../components/admin/application/AddNewApplication";
+import { useRouter } from "next/navigation";
 
 const NAV_BUTTONS = [
-  {
-    key: "query",
-    label: "Query",
-    newHref: "/view-product-query",
-    viewHref: "/view-product-query",
-  },
+  // {
+  //   key: "query",
+  //   label: "Query",
+  //   newHref: "/view-product-query",
+  //   viewHref: "/view-product-query",
+  // },
   {
     key: "category",
     label: "Category",
@@ -53,7 +54,7 @@ const Navbar = () => {
 
   const [applicationImagePreview, setApplicationImagePreview] = useState(null);
   const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
-
+const router = useRouter()
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -83,9 +84,10 @@ const Navbar = () => {
           {/* Logo Section */}
           <div className="w-[140px] h-[80px] flex items-center">
             <img
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain cursor-pointer"
               src="/image 4.0.png"
               alt="oritto-logo"
+              onClick={()=>router.push('/')}
             />
           </div>
 

@@ -73,7 +73,7 @@ const sidebar = [
     links: [
       {
         name: "List Queries",
-        path: "",
+        path: "/home/view-product-query",
       },
       {
         name: "Manage Queries",
