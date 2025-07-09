@@ -1,6 +1,11 @@
 "use client";
-import { createNewProduct } from "@/server/admin";
-import React, { useState } from "react";
+import {
+  createNewProduct,
+  getAllAttributes,
+  getAllCategories,
+  getAllSolutions,
+} from "@/server/admin";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toast";
 
 const ProductForm = () => {
@@ -8,15 +13,45 @@ const ProductForm = () => {
     name: "",
     productOverview: "",
     price: 0,
-    categoryName: [""],
-    solutions: [""],
-    highlights: [""],
-    attributes: [{ name: "", varients: [{ name: "", enabled: false }] }],
+    categoryName: [],
+    solutions: [],
+    highlights: [],
+    attributes: [],
     stock: 0,
     images: [],
   });
 
   const [imagePreview, setImagePreview] = useState([]);
+  const [attributes, setAttributes] = useState([]);
+  const [solutions, setSolutions] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      const result = await Promise.allSettled([
+        getAllAttributes(),
+        getAllSolutions(),
+        getAllCategories(),
+      ]);
+      return result;
+    };
+    fetchInitialData().then((res) => {
+      console.log(res);
+
+      if (res[0].status === "fulfilled") {
+        // setForm({ ...form, attributes: res[0].value });
+        setAttributes(res[0].value);
+      }
+      if (res[1].status === "fulfilled") {
+        // setForm({ ...form, solutions: res[1].value });
+        setSolutions(res[1].value);
+      }
+      if (res[2].status === "fulfilled") {
+        // setForm({ ...form, categoryName: res[2].value });
+        setCategories(res[2].value);
+      }
+    });
+  }, []);
 
   const handleArrayChange = (field, index, value) => {
     const updated = [...form[field]];
@@ -34,35 +69,6 @@ const ProductForm = () => {
     setForm({ ...form, [field]: updated });
   };
 
-  const handleAttributeChange = (i, key, value) => {
-    const updated = [...form.attributes];
-    updated[i][key] = value;
-    setForm({ ...form, attributes: updated });
-  };
-
-  const handleVariantChange = (i, j, key, value) => {
-    const updated = [...form.attributes];
-    updated[i].varients[j][key] =
-      key === "enabled" ? value.target.checked : value;
-    setForm({ ...form, attributes: updated });
-  };
-
-  const addVariant = (i) => {
-    const updated = [...form.attributes];
-    updated[i].varients.push({ name: "", enabled: false });
-    setForm({ ...form, attributes: updated });
-  };
-
-  const addAttribute = () => {
-    setForm({
-      ...form,
-      attributes: [
-        ...form.attributes,
-        { name: "", varients: [{ name: "", enabled: false }] },
-      ],
-    });
-  };
-
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     setForm({ ...form, images: files });
@@ -75,16 +81,30 @@ const ProductForm = () => {
     e.preventDefault();
 
     const formData = new FormData();
+
+    if (form.attributes.length < 1) {
+      toast.warn("Please add at least one attribute");
+      return;
+    } else if (form.categoryName.length < 1) {
+      toast.warn("Please add at least one category");
+      return;
+    } else if (form.solutions.length < 1) {
+      toast.warn("Please add at least one solution");
+      return;
+    } else if (form.highlights.length < 1) {
+      toast.warn("Please add at least one highlight");
+      return;
+    }
+
     formData.append("name", form.name);
     formData.append("productOverview", form.productOverview);
     formData.append("price", form.price);
     formData.append("stock", form.stock);
     formData.append("view", true);
 
-    form.categoryName.forEach((c) => formData.append("categoryName[]", c));
-    form.solutions.forEach((s) => formData.append("solutions[]", s));
-    form.highlights.forEach((h) => formData.append("highlights[]", h));
-
+    formData.append("categoryName", JSON.stringify(form.categoryName));
+    formData.append("solutions", JSON.stringify(form.solutions));
+    formData.append("highlights", JSON.stringify(form.highlights));
     form.images.forEach((img) => formData.append("images", img));
 
     formData.append("attributes", JSON.stringify(form.attributes));
@@ -97,10 +117,10 @@ const ProductForm = () => {
         name: "",
         productOverview: "",
         price: 0,
-        categoryName: [""],
-        solutions: [""],
-        highlights: [""],
-        attributes: [{ name: "", varients: [{ name: "", enabled: false }] }],
+        categoryName: [],
+        solutions: [],
+        highlights: [],
+        attributes: [],
         stock: 0,
         images: [],
       });
@@ -118,6 +138,59 @@ const ProductForm = () => {
       });
     }
   };
+
+  const handleCategoryChange = (status, id, target) => {
+    setForm({
+      ...form,
+      [target]: status
+        ? [...form[target], id]
+        : form[target].filter((c) => c !== id),
+    });
+  };
+
+  const handleAttributeChange = (status, attributeName, variantName) => {
+    const updatedAttributes = [...form.attributes];
+    const attributeIndex = updatedAttributes.findIndex(
+      (attr) => attr.name === attributeName
+    );
+
+    if (attributeIndex !== -1) {
+      // Attribute exists
+      const variantIndex = updatedAttributes[attributeIndex].varients.findIndex(
+        (v) => v.name === variantName
+      );
+
+      if (variantIndex !== -1) {
+        // Variant exists, update its status
+        updatedAttributes[attributeIndex].varients[variantIndex].enabled =
+          status;
+      } else {
+        // Variant doesn't exist, add it
+        updatedAttributes[attributeIndex].varients.push({
+          name: variantName,
+          enabled: status,
+        });
+      }
+    } else {
+      // Attribute doesn't exist, create it
+      updatedAttributes.push({
+        name: attributeName,
+        varients: [
+          {
+            name: variantName,
+            enabled: status,
+          },
+        ],
+      });
+    }
+
+    setForm({
+      ...form,
+      attributes: updatedAttributes,
+    });
+  };
+
+  console.log(form);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex justify-center items-start w-full">
@@ -155,7 +228,7 @@ const ProductForm = () => {
           <input
             type="number"
             placeholder="Price"
-            value={form.price}
+            // value={form.price}
             onChange={(e) => setForm({ ...form, price: e.target.value })}
             className="w-1/2 border px-4 py-2 rounded-md"
             required
@@ -163,7 +236,7 @@ const ProductForm = () => {
           <input
             type="number"
             placeholder="Stock"
-            value={form.stock}
+            // value={form.stock}
             onChange={(e) => setForm({ ...form, stock: e.target.value })}
             className="w-1/2 border px-4 py-2 rounded-md"
             required
@@ -195,7 +268,7 @@ const ProductForm = () => {
           <button
             type="button"
             onClick={() => addToArray("highlights", "")}
-            className="text-blue-600 mt-2"
+            className="text-blue-600 bg-blue-100 py-2 px-4 ml-2 rounded-lg mt-2"
           >
             + Add Highlight
           </button>
@@ -203,118 +276,86 @@ const ProductForm = () => {
 
         {/* Category */}
         <div>
-          <label className="font-medium">Categories</label>
-          {form.categoryName.map((cat, i) => (
-            <div key={i} className="flex gap-2 mt-2">
-              <input
-                type="text"
-                value={cat}
-                onChange={(e) =>
-                  handleArrayChange("categoryName", i, e.target.value)
-                }
-                className="w-full border px-3 py-1 rounded"
-              />
-              <button
-                type="button"
-                onClick={() => removeFromArray("categoryName", i)}
-                className="text-red-500"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => addToArray("categoryName", "")}
-            className="text-blue-600 mt-2"
-          >
-            + Add Category
-          </button>
+          <label className="mb-2 font-bold">Select Categories</label>
+          <ul className="flex flex-row gap-4 flex-wrap">
+            {categories.map((category, i) => (
+              <li key={i} className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id={`${category._id}`}
+                  onChange={(e) => {
+                    handleCategoryChange(
+                      e.target.checked,
+                      category.name,
+                      "categoryName"
+                    );
+                  }}
+                />
+                <label htmlFor={`${category._id}`}>
+                  {category.name || "N/A"}
+                </label>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Solutions */}
         <div>
-          <label className="font-medium">Solutions</label>
-          {form.solutions.map((s, i) => (
-            <div key={i} className="flex gap-2 mt-2">
-              <input
-                type="text"
-                value={s}
-                onChange={(e) =>
-                  handleArrayChange("solutions", i, e.target.value)
-                }
-                className="w-full border px-3 py-1 rounded"
-              />
-              <button
-                type="button"
-                onClick={() => removeFromArray("solutions", i)}
-                className="text-red-500"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => addToArray("solutions", "")}
-            className="text-blue-600 mt-2"
-          >
-            + Add Solution
-          </button>
+          <label className="mb-2 font-bold">Select Solutions</label>
+          <ul className="flex flex-row gap-4 flex-wrap">
+            {solutions.map((sol, i) => (
+              <li className="" key={i}>
+                <input
+                  type="checkbox"
+                  id={`${sol._id}`}
+                  onChange={(e) => {
+                    handleCategoryChange(
+                      e.target.checked,
+                      sol.name,
+                      "solutions"
+                    );
+                  }}
+                />
+                <label htmlFor={`${sol._id}`}>{sol.name || "N/A"}</label>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Attributes */}
         <div>
-          <label className="font-medium">Attributes</label>
-          {form.attributes.map((attr, i) => (
-            <div key={i} className="border p-4 rounded-md mt-4">
-              <input
-                type="text"
-                placeholder="Attribute Name"
-                value={attr.name}
-                onChange={(e) =>
-                  handleAttributeChange(i, "name", e.target.value)
-                }
-                className="w-full mb-2 border px-3 py-1 rounded"
-              />
-              <label className="text-sm text-gray-600">Variants</label>
-              {attr.varients.map((variant, j) => (
-                <div key={j} className="flex gap-2 items-center mt-1">
-                  <input
-                    type="text"
-                    placeholder="Variant Name"
-                    value={variant.name}
-                    onChange={(e) =>
-                      handleVariantChange(i, j, "name", e.target.value)
-                    }
-                    className="flex-1 border px-3 py-1 rounded"
-                  />
-                  <label className="flex items-center gap-1">
-                    <input
-                      type="checkbox"
-                      checked={variant.enabled}
-                      onChange={(e) => handleVariantChange(i, j, "enabled", e)}
-                    />
-                    Enabled
+          <label className="mb-2 font-bold">Attributes</label>
+
+          <ul className="flex flex-row gap-4 flex-wrap">
+            {attributes.map((attr, i) => (
+              <li key={i} className="min-w-[200px]">
+                <div className="flex justify-start items-center">
+                  <label className="font-semibold" htmlFor={`${attr._id}`}>
+                    {attr.name}
                   </label>
                 </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => addVariant(i)}
-                className="text-blue-600 mt-2 text-sm"
-              >
-                + Add Variant
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addAttribute}
-            className="text-blue-600 mt-2"
-          >
-            + Add Attribute
-          </button>
+                <ul className="flex flex-col">
+                  {attr.varients.map((variant, i) => (
+                    <li key={i} className="ms-2 flex flex-row gap-3">
+                      <p>{i + 1}</p>
+                      <input
+                        type="checkbox"
+                        id={`${variant._id}`}
+                        onChange={(e) => {
+                          handleAttributeChange(
+                            e.target.checked,
+                            attr.name,
+                            variant.name
+                          );
+                        }}
+                      />
+                      <label htmlFor={`${variant._id}`}>{variant.name}</label>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Images */}

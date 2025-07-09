@@ -1,8 +1,9 @@
-import UnderDevelopment from "@/components/UnderDevelopment";
+"use client";
+import ManageCategory from "@/components/category/ManageCategory";
 import React from "react";
 
 const Page = () => {
-  return <UnderDevelopment />;
+  return <ManageCategory />;
 };
 
 export default Page;

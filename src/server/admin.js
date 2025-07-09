@@ -90,3 +90,12 @@ export const getAllProducts = async () => {
     throw err;
   }
 };
+
+export const deleteCategoryAPI = async (name) => {
+  try {
+    const res = await apiClient.put("/v1/categories/delete-category", name);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
