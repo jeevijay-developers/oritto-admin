@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import {
-  deleteProductQuery,
-  getAllProductQuery,
-} from "../../../server/common";
+import { deleteProductQuery, getAllProductQuery } from "../../../server/common";
 import "./Query.css";
 import MessageModal from "./MessageModal";
 import ResponseModal from "./ResponseModal"; // New import
@@ -45,7 +42,6 @@ const ManageProductQuery = () => {
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
   };
-
 
   const handleDelete = (id) => {
     confirmAlert({
@@ -93,7 +89,7 @@ const ManageProductQuery = () => {
 
   return (
     <div className="overflow-x-auto w-full p-4">
-      <div className="max-w-sm xs-max-w-xs md:max-w-md lg:max-w-3xl xl:max-w-7xl">
+      <div className="max-w-xs sm:max-w-xs md:max-w-md lg:max-w-3xl xl:max-w-7xl">
         <table className="table-auto w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-100">
@@ -124,7 +120,7 @@ const ManageProductQuery = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {item.phone}
                 </td>
-                <td className="border border-gray-300 px-4 py-2 break-words max-w-xs">
+                <td className="border border-gray-300 px-4 py-2  md:break-words md:max-w-xs">
                   {item.productName}
                 </td>
                 <td className="border border-gray-300 px-4 py-2 text-nowrap">
