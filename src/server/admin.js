@@ -99,3 +99,22 @@ export const deleteCategoryAPI = async (name) => {
     throw err;
   }
 };
+
+// blog routes
+export const getBlogs = async (data) => {
+  try {
+    const res = await apiClient.get("/blogs/getAllBlogs", data);
+    return res.data;
+  } catch (error) {
+    throw err;
+  }
+};
+export const addBlog = async (data) => {
+  try {
+    const res = await apiClient.post("/blogs/add-blog", data);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+

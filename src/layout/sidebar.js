@@ -86,7 +86,7 @@ const sidebar = [
     links: [
       {
         name: "Add Blog",
-        path: "",
+        path: "/home/create-blog",
       },
       {
         name: "List Blogs",
