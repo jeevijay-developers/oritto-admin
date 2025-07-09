@@ -4,7 +4,8 @@ import ReactPaginate from "react-paginate";
 import { getAllProductQuery } from "../../../server/common";
 import "./Query.css";
 import MessageModal from "./MessageModal";
-const ViewProductQuery = () => {
+
+const ManageProductQuery = () => {
   const [query, setQuery] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); 
   const [totalPages, setTotalPages] = useState(1);
@@ -122,13 +123,12 @@ const ViewProductQuery = () => {
           forcePage={currentPage}
         />
       </div>
-
-      {/* Modal */}
       {isModalOpen && (
         <MessageModal message={selectedMessage} onClose={closeModal} />
       )}
+      
     </div>
   );
 };
 
-export default ViewProductQuery;
+export default ManageProductQuery;

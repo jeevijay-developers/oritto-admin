@@ -77,7 +77,7 @@ const sidebar = [
       },
       {
         name: "Manage Queries",
-        path: "",
+        path: "/home/manage-product-query",
       },
     ],
   },
