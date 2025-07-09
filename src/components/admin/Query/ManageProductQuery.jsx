@@ -1,19 +1,30 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { deleteProductQuery, getAllProductQuery, sendQueryMessage } from "../../../server/common";
+import {
+  deleteProductQuery,
+  getAllProductQuery,
+  sendQueryMessage,
+} from "../../../server/common";
 import "./Query.css";
 import MessageModal from "./MessageModal";
+import ResponseModal from "./ResponseModal"; // New import
 import { MdDelete } from "react-icons/md";
 import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css"; 
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { toast } from "react-toastify"; // Add toast import
+
 const ManageProductQuery = () => {
   const [query, setQuery] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedQueryId, setSelectedQueryId] = useState(null);
+
+  // New state for response modal
+  const [isResponseModalOpen, setIsResponseModalOpen] = useState(false);
+  const [selectedQueryForResponse, setSelectedQueryForResponse] =
+    useState(null);
 
   const limit = 5;
 
@@ -41,8 +52,8 @@ const ManageProductQuery = () => {
     setSelectedMessage(selectedQuery.message);
     setIsModalOpen(true);
   };
+
   const handleDelete = (id) => {
-    // const selectedQuery = query.find((item) => item._id === id);
     confirmAlert({
       title: "Delete Query",
       message: "Are you sure to do this? This cannot be undone",
@@ -51,9 +62,11 @@ const ManageProductQuery = () => {
           label: "Yes, Delete",
           onClick: async () => {
             try {
-              const res = await deleteProductQuery(id)
+              const res = await deleteProductQuery(id);
               toast.success("Query deleted");
               console.log("Deletion response: ", res);
+              // Refresh the queries after deletion
+              fetchQueries(currentPage);
             } catch (error) {
               toast.error("Error in deleting Query");
             }
@@ -66,8 +79,12 @@ const ManageProductQuery = () => {
       ],
     });
   };
+
+  // Updated handleSendQueryMessage function
   const handleSendQueryMessage = (id) => {
-   sendQueryMessage(data)
+    const selectedQuery = query.find((item) => item._id === id);
+    setSelectedQueryForResponse(selectedQuery);
+    setIsResponseModalOpen(true);
   };
 
   const closeModal = () => {
@@ -75,9 +92,14 @@ const ManageProductQuery = () => {
     setSelectedMessage("");
   };
 
+  const closeResponseModal = () => {
+    setIsResponseModalOpen(false);
+    setSelectedQueryForResponse(null);
+  };
+
   return (
-    <div className="overflow-x-auto w-full  p-4">
-      <div className=" max-w-sm md:max-w-md lg:max-w-3xl xl:max-w-7xl ">
+    <div className="overflow-x-auto w-full p-4">
+      <div className="max-w-sm md:max-w-md lg:max-w-3xl xl:max-w-7xl">
         <table className="table-auto w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-100">
@@ -88,7 +110,6 @@ const ManageProductQuery = () => {
               <th className="border border-gray-300 px-4 py-2">Product</th>
               <th className="border border-gray-300 px-4 py-2">Submitted At</th>
               <th className="border border-gray-300 px-4 py-2">Message</th>
-
               <th className="border border-gray-300 px-4 py-2">
                 Send Response
               </th>
@@ -124,16 +145,15 @@ const ManageProductQuery = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   <button
                     onClick={() => handleUpdate(item._id)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded "
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
                   >
                     View Message
                   </button>
                 </td>
-
                 <td className="border border-gray-300 px-4 py-2">
                   <button
                     onClick={() => handleSendQueryMessage(item._id)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded "
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded"
                   >
                     Send Response
                   </button>
@@ -141,7 +161,7 @@ const ManageProductQuery = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   <div
                     onClick={() => handleDelete(item._id)}
-                    className="bg-red-500 hover:bg-red-600 text-black cursor-pointer px-4 py-4 rounded "
+                    className="bg-red-500 hover:bg-red-600 text-black cursor-pointer px-4 py-4 rounded"
                   >
                     <MdDelete />
                   </div>
@@ -151,6 +171,7 @@ const ManageProductQuery = () => {
           </tbody>
         </table>
       </div>
+
       {/* React Paginate */}
       <div className="flex justify-center mt-4">
         <ReactPaginate
@@ -174,8 +195,21 @@ const ManageProductQuery = () => {
           forcePage={currentPage}
         />
       </div>
+
+      {/* Existing Message Modal */}
       {isModalOpen && (
         <MessageModal message={selectedMessage} onClose={closeModal} />
+      )}
+
+      {/* New Response Modal */}
+      {isResponseModalOpen && selectedQueryForResponse && (
+        <ResponseModal
+          isOpen={isResponseModalOpen}
+          onClose={closeResponseModal}
+          queryId={selectedQueryForResponse._id}
+          customerEmail={selectedQueryForResponse.email}
+          originalMessage={selectedQueryForResponse.message}
+        />
       )}
     </div>
   );

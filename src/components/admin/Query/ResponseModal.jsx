@@ -14,12 +14,9 @@ const ResponseModal = ({
   const [isLoading, setIsLoading] = useState(false);
 
   // Pre-fill with a template message when modal opens
-  const defaultMessage = `Dear ${customerName},
-
+  const defaultMessage = `
 Thank you for your inquiry regarding our product. We have received your message and are pleased to assist you.
-
-Best regards,
-Customer Support Team`;
+`;
 
   React.useEffect(() => {
     if (isOpen) {
@@ -60,7 +57,7 @@ Customer Support Team`;
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-gray-800">Send Response</h2>
