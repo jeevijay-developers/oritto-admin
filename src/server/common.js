@@ -182,9 +182,7 @@ export const sendQueryMessage = async (data) => {
 };
 export const deleteProductQuery = async (id) => {
   try {
-    const res = await apiClient.delete(
-      `/v1/query/delete-product-query`
-    );
+    const res = await apiClient.delete(`/v1/query/delete-query/${id}`);
     return res.data;
   } catch (error) {
     throw error;

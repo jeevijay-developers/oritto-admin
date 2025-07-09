@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { deleteProductQuery, getAllProductQuery } from "../../../server/common";
+import { deleteProductQuery, getAllProductQuery, sendQueryMessage } from "../../../server/common";
 import "./Query.css";
 import MessageModal from "./MessageModal";
 import { MdDelete } from "react-icons/md";
@@ -13,6 +13,8 @@ const ManageProductQuery = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedQueryId, setSelectedQueryId] = useState(null);
+
   const limit = 5;
 
   const fetchQueries = (page) => {
@@ -65,7 +67,7 @@ const ManageProductQuery = () => {
     });
   };
   const handleSendQueryMessage = (id) => {
-   
+   sendQueryMessage(data)
   };
 
   const closeModal = () => {
