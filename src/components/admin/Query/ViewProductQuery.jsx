@@ -44,7 +44,7 @@ const ViewProductQuery = () => {
 
   return (
     <div className="overflow-x-auto w-full  p-4">
-      <div className=" max-w-sm md:max-w-md lg:max-w-3xl xl:max-w-7xl ">
+      <div className=" max-w-sm xs-max-w-xs md:max-w-md lg:max-w-3xl xl:max-w-7xl ">
         <table className="table-auto w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-100">

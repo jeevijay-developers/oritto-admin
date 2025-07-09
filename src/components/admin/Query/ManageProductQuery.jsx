@@ -4,7 +4,6 @@ import ReactPaginate from "react-paginate";
 import {
   deleteProductQuery,
   getAllProductQuery,
-  sendQueryMessage,
 } from "../../../server/common";
 import "./Query.css";
 import MessageModal from "./MessageModal";
@@ -47,11 +46,6 @@ const ManageProductQuery = () => {
     setCurrentPage(event.selected);
   };
 
-  const handleUpdate = (id) => {
-    const selectedQuery = query.find((item) => item._id === id);
-    setSelectedMessage(selectedQuery.message);
-    setIsModalOpen(true);
-  };
 
   const handleDelete = (id) => {
     confirmAlert({
@@ -99,7 +93,7 @@ const ManageProductQuery = () => {
 
   return (
     <div className="overflow-x-auto w-full p-4">
-      <div className="max-w-sm md:max-w-md lg:max-w-3xl xl:max-w-7xl">
+      <div className="max-w-sm xs-max-w-xs md:max-w-md lg:max-w-3xl xl:max-w-7xl">
         <table className="table-auto w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-100">
@@ -109,7 +103,6 @@ const ManageProductQuery = () => {
               <th className="border border-gray-300 px-4 py-2">Phone</th>
               <th className="border border-gray-300 px-4 py-2">Product</th>
               <th className="border border-gray-300 px-4 py-2">Submitted At</th>
-              <th className="border border-gray-300 px-4 py-2">Message</th>
               <th className="border border-gray-300 px-4 py-2">
                 Send Response
               </th>
@@ -142,14 +135,7 @@ const ManageProductQuery = () => {
                     timeZone: "Asia/Kolkata",
                   })}
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  <button
-                    onClick={() => handleUpdate(item._id)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
-                  >
-                    View Message
-                  </button>
-                </td>
+             
                 <td className="border border-gray-300 px-4 py-2">
                   <button
                     onClick={() => handleSendQueryMessage(item._id)}
@@ -196,10 +182,6 @@ const ManageProductQuery = () => {
         />
       </div>
 
-      {/* Existing Message Modal */}
-      {isModalOpen && (
-        <MessageModal message={selectedMessage} onClose={closeModal} />
-      )}
 
       {/* New Response Modal */}
       {isResponseModalOpen && selectedQueryForResponse && (
@@ -207,6 +189,7 @@ const ManageProductQuery = () => {
           isOpen={isResponseModalOpen}
           onClose={closeResponseModal}
           queryId={selectedQueryForResponse._id}
+          customerName={selectedQueryForResponse.name}
           customerEmail={selectedQueryForResponse.email}
           originalMessage={selectedQueryForResponse.message}
         />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { sendQueryMessage } from "../../../server/common";
 import { toast } from "react-toastify";
+import { FaWindowClose } from "react-icons/fa";
 
 const ResponseModal = ({
   isOpen,
@@ -63,10 +64,10 @@ Thank you for your inquiry regarding our product. We have received your message 
           <h2 className="text-xl font-bold text-gray-800">Send Response</h2>
           <button
             onClick={handleClose}
-            className="text-gray-500 hover:text-gray-700 text-2xl"
+            className="text-red-500 hover:text-red-700 text-3xl"
             disabled={isLoading}
           >
-            ×
+            <FaWindowClose />
           </button>
         </div>
 
