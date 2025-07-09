@@ -1,20 +1,22 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { getAllProductQuery } from "../../../server/common";
+import { deleteProductQuery, getAllProductQuery } from "../../../server/common";
 import "./Query.css";
 import MessageModal from "./MessageModal";
-
+import { MdDelete } from "react-icons/md";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css"; 
 const ManageProductQuery = () => {
   const [query, setQuery] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0); 
+  const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const limit = 5;
 
   const fetchQueries = (page) => {
-    getAllProductQuery(page + 1, limit) 
+    getAllProductQuery(page + 1, limit)
       .then((data) => {
         setQuery(data.data);
         setTotalPages(data.totalPages);
@@ -37,6 +39,34 @@ const ManageProductQuery = () => {
     setSelectedMessage(selectedQuery.message);
     setIsModalOpen(true);
   };
+  const handleDelete = (id) => {
+    // const selectedQuery = query.find((item) => item._id === id);
+    confirmAlert({
+      title: "Delete Query",
+      message: "Are you sure to do this? This cannot be undone",
+      buttons: [
+        {
+          label: "Yes, Delete",
+          onClick: async () => {
+            try {
+              const res = await deleteProductQuery(id)
+              toast.success("Query deleted");
+              console.log("Deletion response: ", res);
+            } catch (error) {
+              toast.error("Error in deleting Query");
+            }
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+  const handleSendQueryMessage = (id) => {
+   
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -56,6 +86,11 @@ const ManageProductQuery = () => {
               <th className="border border-gray-300 px-4 py-2">Product</th>
               <th className="border border-gray-300 px-4 py-2">Submitted At</th>
               <th className="border border-gray-300 px-4 py-2">Message</th>
+
+              <th className="border border-gray-300 px-4 py-2">
+                Send Response
+              </th>
+              <th className="border border-gray-300 px-4 py-2">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -81,9 +116,6 @@ const ManageProductQuery = () => {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
                     timeZone: "Asia/Kolkata",
                   })}
                 </td>
@@ -94,6 +126,23 @@ const ManageProductQuery = () => {
                   >
                     View Message
                   </button>
+                </td>
+
+                <td className="border border-gray-300 px-4 py-2">
+                  <button
+                    onClick={() => handleSendQueryMessage(item._id)}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded "
+                  >
+                    Send Response
+                  </button>
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <div
+                    onClick={() => handleDelete(item._id)}
+                    className="bg-red-500 hover:bg-red-600 text-black cursor-pointer px-4 py-4 rounded "
+                  >
+                    <MdDelete />
+                  </div>
                 </td>
               </tr>
             ))}
@@ -126,7 +175,6 @@ const ManageProductQuery = () => {
       {isModalOpen && (
         <MessageModal message={selectedMessage} onClose={closeModal} />
       )}
-      
     </div>
   );
 };

@@ -172,3 +172,21 @@ export const getAllProductQuery = async (page = 1, limit = 5) => {
     throw error;
   }
 };
+export const sendQueryMessage = async (data) => {
+  try {
+    const res = await apiClient.post(`/v1/query/send-reply`,data);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const deleteProductQuery = async (id) => {
+  try {
+    const res = await apiClient.delete(
+      `/v1/query/delete-product-query`
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
