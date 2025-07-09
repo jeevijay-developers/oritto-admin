@@ -1,19 +1,31 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { getAllProductQuery } from "../../../server/common";
+import { deleteProductQuery, getAllProductQuery } from "../../../server/common";
 import "./Query.css";
 import MessageModal from "./MessageModal";
-const ViewProductQuery = () => {
+import ResponseModal from "./ResponseModal"; // New import
+import { MdDelete } from "react-icons/md";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { toast } from "react-toastify"; // Add toast import
+
+const ManageProductQuery = () => {
   const [query, setQuery] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0); 
+  const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // New state for response modal
+  const [isResponseModalOpen, setIsResponseModalOpen] = useState(false);
+  const [selectedQueryForResponse, setSelectedQueryForResponse] =
+    useState(null);
+
   const limit = 5;
 
   const fetchQueries = (page) => {
-    getAllProductQuery(page + 1, limit) 
+    getAllProductQuery(page + 1, limit)
       .then((data) => {
         setQuery(data.data);
         setTotalPages(data.totalPages);
@@ -31,10 +43,38 @@ const ViewProductQuery = () => {
     setCurrentPage(event.selected);
   };
 
-  const handleUpdate = (id) => {
+  const handleDelete = (id) => {
+    confirmAlert({
+      title: "Delete Query",
+      message: "Are you sure to do this? This cannot be undone",
+      buttons: [
+        {
+          label: "Yes, Delete",
+          onClick: async () => {
+            try {
+              const res = await deleteProductQuery(id);
+              toast.success("Query deleted");
+              console.log("Deletion response: ", res);
+              // Refresh the queries after deletion
+              fetchQueries(currentPage);
+            } catch (error) {
+              toast.error("Error in deleting Query");
+            }
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
+  // Updated handleSendQueryMessage function
+  const handleSendQueryMessage = (id) => {
     const selectedQuery = query.find((item) => item._id === id);
-    setSelectedMessage(selectedQuery.message);
-    setIsModalOpen(true);
+    setSelectedQueryForResponse(selectedQuery);
+    setIsResponseModalOpen(true);
   };
 
   const closeModal = () => {
@@ -42,9 +82,14 @@ const ViewProductQuery = () => {
     setSelectedMessage("");
   };
 
+  const closeResponseModal = () => {
+    setIsResponseModalOpen(false);
+    setSelectedQueryForResponse(null);
+  };
+
   return (
-    <div className="overflow-x-auto w-full  p-4">
-      <div className="max-w-sm sm:max-w-sm md:max-w-md lg:max-w-3xl xl:max-w-7xl">
+    <div className="overflow-x-auto w-full p-4">
+      <div className="max-w-xs sm:max-w-xs md:max-w-md lg:max-w-3xl xl:max-w-7xl">
         <table className="table-auto w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-100">
@@ -54,7 +99,10 @@ const ViewProductQuery = () => {
               <th className="border border-gray-300 px-4 py-2">Phone</th>
               <th className="border border-gray-300 px-4 py-2">Product</th>
               <th className="border border-gray-300 px-4 py-2">Submitted At</th>
-              <th className="border border-gray-300 px-4 py-2">Message</th>
+              <th className="border border-gray-300 px-4 py-2">
+                Send Response
+              </th>
+              <th className="border border-gray-300 px-4 py-2">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -72,32 +120,40 @@ const ViewProductQuery = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {item.phone}
                 </td>
-                <td className="border border-gray-300 px-4 py-2 break-words max-w-xs">
+                <td className="border border-gray-300 px-4 py-2  md:break-words md:max-w-xs">
                   {item.productName}
                 </td>
-
                 <td className="border border-gray-300 px-4 py-2 text-nowrap">
                   {new Date(item.submittedAt).toLocaleString("en-IN", {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
-
                     timeZone: "Asia/Kolkata",
                   })}
                 </td>
+
                 <td className="border border-gray-300 px-4 py-2">
                   <button
-                    onClick={() => handleUpdate(item._id)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded "
+                    onClick={() => handleSendQueryMessage(item._id)}
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded"
                   >
-                    View Message
+                    Send Response
                   </button>
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <div
+                    onClick={() => handleDelete(item._id)}
+                    className="bg-red-500 hover:bg-red-600 text-black cursor-pointer px-4 py-4 rounded"
+                  >
+                    <MdDelete />
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
       {/* React Paginate */}
       <div className="flex justify-center mt-4">
         <ReactPaginate
@@ -122,12 +178,19 @@ const ViewProductQuery = () => {
         />
       </div>
 
-      {/* Modal */}
-      {isModalOpen && (
-        <MessageModal message={selectedMessage} onClose={closeModal} />
+      {/* New Response Modal */}
+      {isResponseModalOpen && selectedQueryForResponse && (
+        <ResponseModal
+          isOpen={isResponseModalOpen}
+          onClose={closeResponseModal}
+          queryId={selectedQueryForResponse._id}
+          customerName={selectedQueryForResponse.name}
+          customerEmail={selectedQueryForResponse.email}
+          originalMessage={selectedQueryForResponse.message}
+        />
       )}
     </div>
   );
 };
 
-export default ViewProductQuery;
+export default ManageProductQuery;
