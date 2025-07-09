@@ -100,6 +100,24 @@ export const deleteCategoryAPI = async (name) => {
   }
 };
 
+// blog routes
+export const getBlogs = async (data) => {
+  try {
+    const res = await apiClient.get("/blogs/getAllBlogs", data);
+    return res.data;
+  } catch (error) {
+    throw err;
+  }
+};
+export const addBlog = async (data) => {
+  try {
+    const res = await apiClient.post("/blogs/add-blog", data);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getCategoryById = async (id) => {
   try {
     const res = await apiClient.get(`/v1/categories/get-category-by-id/${id}`);
