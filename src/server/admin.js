@@ -99,3 +99,24 @@ export const deleteCategoryAPI = async (name) => {
     throw err;
   }
 };
+
+export const getCategoryById = async (id) => {
+  try {
+    const res = await apiClient.get(`/v1/categories/get-category-by-id/${id}`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateCategoryById = async (id, data) => {
+  try {
+    const res = await apiClient.put(
+      `/v1/categories/update-category-by-id/${id}`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};

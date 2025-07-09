@@ -24,7 +24,8 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/app/home/category/update/[id]/page.jsx"
+    "src/app/home/category/update/[id]/page.jsx",
+    "src/app/home/category/update/[id]/loading.jsx"
   ],
   "exclude": ["node_modules"]
 }
