@@ -124,7 +124,7 @@ const ManageProductQuery = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {item.phone}
                 </td>
-                <td className="border border-gray-300 px-4 py-2 text-nowrap">
+                <td className="border border-gray-300 px-4 py-2 break-words max-w-xs">
                   {item.productName}
                 </td>
                 <td className="border border-gray-300 px-4 py-2 text-nowrap">
@@ -135,7 +135,7 @@ const ManageProductQuery = () => {
                     timeZone: "Asia/Kolkata",
                   })}
                 </td>
-             
+
                 <td className="border border-gray-300 px-4 py-2">
                   <button
                     onClick={() => handleSendQueryMessage(item._id)}
@@ -181,7 +181,6 @@ const ManageProductQuery = () => {
           forcePage={currentPage}
         />
       </div>
-
 
       {/* New Response Modal */}
       {isResponseModalOpen && selectedQueryForResponse && (

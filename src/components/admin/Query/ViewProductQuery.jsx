@@ -72,17 +72,16 @@ const ViewProductQuery = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {item.phone}
                 </td>
-                <td className="border border-gray-300 px-4 py-2 text-nowrap">
+                <td className="border border-gray-300 px-4 py-2 break-words max-w-xs">
                   {item.productName}
                 </td>
+
                 <td className="border border-gray-300 px-4 py-2 text-nowrap">
                   {new Date(item.submittedAt).toLocaleString("en-IN", {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
+
                     timeZone: "Asia/Kolkata",
                   })}
                 </td>
