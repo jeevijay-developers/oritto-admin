@@ -7,40 +7,7 @@ import AddNewCategory from "../components/admin/category/AddNewCategory";
 import AddNewApplication from "../components/admin/application/AddNewApplication";
 import { useRouter } from "next/navigation";
 
-const NAV_BUTTONS = [
-  // {
-  //   key: "query",
-  //   label: "Query",
-  //   newHref: "/view-product-query",
-  //   viewHref: "/view-product-query",
-  // },
-  {
-    key: "category",
-    label: "Category",
-    newHref: "/category/new",
-    viewHref: "/view-categories",
-  },
-
-  {
-    key: "application",
-    label: "Application",
-    newHref: "/application/new",
-    viewHref: "/view-applications",
-  },
-  {
-    key: "products",
-    label: "Products",
-    newHref: "/products-new",
-    viewHref: "/home/products",
-  },
-
-  // {
-  //   key: "blogs",
-  //   label: "Blogs",
-  //   newHref: "/home/create-blog",
-  //   viewHref: "/blogs/view",
-  // },
-];
+const NAV_BUTTONS = [];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,7 +21,7 @@ const Navbar = () => {
 
   const [applicationImagePreview, setApplicationImagePreview] = useState(null);
   const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
-const router = useRouter()
+  const router = useRouter();
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -87,7 +54,7 @@ const router = useRouter()
               className="w-full h-full object-contain cursor-pointer"
               src="/image 4.0.png"
               alt="oritto-logo"
-              onClick={()=>router.push('/')}
+              onClick={() => router.push("/")}
             />
           </div>
 
@@ -130,8 +97,8 @@ const router = useRouter()
                         New
                       </button>
                     ) : btn.key === "query" ? (
-                     <></>
-                    ) :(
+                      <></>
+                    ) : (
                       <a
                         href={btn.newHref}
                         className="block w-full px-4 py-3 text-[1rem] font-semibold text-gray-800 dark:text-white border-b border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition bg-gradient-to-r "
