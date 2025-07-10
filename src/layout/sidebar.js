@@ -73,11 +73,11 @@ const sidebar = [
     links: [
       {
         name: "List Queries",
-        path: "/home/view-product-query",
+        path: "/home/query/view-product-query",
       },
       {
         name: "Manage Queries",
-        path: "/home/manage-product-query",
+        path: "/home/query/manage-product-query",
       },
     ],
   },
@@ -86,11 +86,11 @@ const sidebar = [
     links: [
       {
         name: "Add Blog",
-        path: "/home/create-blog",
+        path: "/home/blogs/create-blog/",
       },
       {
         name: "List Blogs",
-        path: "",
+        path: "/home/blogs/list-blogs/",
       },
       {
         name: "Manage Blogs",

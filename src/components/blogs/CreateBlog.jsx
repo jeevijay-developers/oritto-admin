@@ -2,7 +2,6 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
-import { axiosInstance } from "../../lib/axiosInstance";
 import { toast } from "react-toast";
 import { ClipLoader } from "react-spinners";
 import { addBlog } from "@/server/admin";
@@ -23,24 +22,31 @@ export default function CreateBlog() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("desc", desc);
     formData.append("content", content);
-   
+
     if (bannerImage) formData.append("bannerImage", bannerImage);
     contentImages.forEach((img) => formData.append("contentImages", img));
-    console.log("formdata", formData);
-    const res = await addBlog(formData)
-      .then((response) => {
-        console.log("Blog submitted successfully:", response.data);
-        toast.success("Blog submitted successfully!");
-      })
-      .catch((error) => {
-        console.error("Error submitting blog:", error);
-        toast.error("Error submitting blog. Please try again.");
-      })
-      .finally(() => setLoading(false));
+
+    try {
+      await addBlog(formData);
+      toast.success("Blog added successfully!");
+
+      // Clear fields
+      setTitle("");
+      setDesc("");
+      setContent("");
+      setBannerImage(null);
+      setContentImages([]);
+    } catch (error) {
+      console.error("Error submitting blog:", error);
+      toast.error("Error submitting blog. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -112,11 +118,11 @@ export default function CreateBlog() {
             </label>
           </div>
           {bannerImage && (
-            <div className="mt-4">
+            <div className="mt-4 w-full h-48 bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg overflow-hidden">
               <img
                 src={URL.createObjectURL(bannerImage)}
                 alt="Banner Preview"
-                className="rounded-lg w-full max-h-48 object-cover"
+                className="max-h-full max-w-full object-contain"
               />
             </div>
           )}
@@ -163,11 +169,13 @@ export default function CreateBlog() {
                   />
                 </label>
                 {contentImages[index] && (
-                  <img
-                    src={URL.createObjectURL(contentImages[index])}
-                    alt={`Preview ${index + 1}`}
-                    className="mt-2 rounded-lg w-full h-24 object-cover"
-                  />
+                  <div className="mt-2 w-full h-24 bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg overflow-hidden">
+                    <img
+                      src={URL.createObjectURL(contentImages[index])}
+                      alt={`Preview ${index + 1}`}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
                 )}
               </div>
             ))}
