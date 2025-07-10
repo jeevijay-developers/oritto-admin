@@ -138,3 +138,35 @@ export const updateCategoryById = async (id, data) => {
     throw err;
   }
 };
+
+export const getProductsById = async (id) => {
+  try {
+    const res = await apiClient.get(`/v1/products/product/by-id/${id}`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateProductById = async (id, data) => {
+  try {
+    const res = await apiClient.put(
+      `/v1/products/product/update-by-id/${id}`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const deleteProductById = async (id) => {
+  try {
+    const res = await apiClient.delete(
+      `/v1/products/product/delete-by-id/${id}`
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};

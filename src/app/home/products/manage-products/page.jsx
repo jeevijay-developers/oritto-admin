@@ -1,8 +1,8 @@
-import UnderDevelopment from "@/components/UnderDevelopment";
+import ManageProducts from "@/components/products/ManageProducts";
 import React from "react";
 
 const Page = () => {
-  return <UnderDevelopment />;
+  return <ManageProducts />;
 };
 
 export default Page;
