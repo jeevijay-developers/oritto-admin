@@ -4,7 +4,7 @@ import React from "react";
 import ManageProductQuery from "@/components/admin/Query/ManageProductQuery";
 const page = () => {
   return (
-    <div>
+    <div className="w-full">
       <ManageProductQuery />
     </div>
   );

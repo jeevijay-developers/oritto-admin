@@ -170,3 +170,35 @@ export const deleteProductById = async (id) => {
     throw err;
   }
 };
+
+export const getSolutionById = async (id) => {
+  try {
+    const res = await apiClient.get(`/v1/solutions/get-solution-by-id/${id}`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateSolutionById = async (id, data) => {
+  try {
+    const res = await apiClient.put(
+      `/v1/solutions/update-solution-by-id/${id}`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const deleteSolutionById = async (id) => {
+  try {
+    const res = await apiClient.delete(
+      `/v1/solutions/delete-solution-by-id/${id}`
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};

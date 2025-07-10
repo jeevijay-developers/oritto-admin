@@ -4,7 +4,7 @@ import React from "react";
 import ViewProductQuery from "../../../components/admin/Query/ViewProductQuery";
 const page = () => {
   return (
-    <div>
+    <div className="w-full">
       <ViewProductQuery />
     </div>
   );
