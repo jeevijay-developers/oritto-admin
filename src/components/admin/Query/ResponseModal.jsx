@@ -10,6 +10,7 @@ const ResponseModal = ({
   customerName,
   customerEmail,
   originalMessage,
+  products,
 }) => {
   const [replyMessage, setReplyMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -91,6 +92,15 @@ Thank you for your inquiry regarding our product. We have received your message 
           </h3>
           <div className="p-3 bg-gray-100 rounded-lg border">
             <p className="text-gray-600">{originalMessage}</p>
+          </div>
+        </div>
+        {/* view Products */}
+        <div className="mb-4">
+          <h3 className="font-semibold text-gray-700 mb-2">Products:</h3>
+          <div className="p-3 bg-gray-100 rounded-lg border">
+            {products.map((item,index) => (
+              <p key={index} className="text-gray-600">{item.productName}</p>
+            ))}
           </div>
         </div>
 

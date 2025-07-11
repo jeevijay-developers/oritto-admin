@@ -97,7 +97,7 @@ const ManageProductQuery = () => {
               <th className="border border-gray-300 px-4 py-2">Name</th>
               <th className="border border-gray-300 px-4 py-2">Email</th>
               <th className="border border-gray-300 px-4 py-2">Phone</th>
-              <th className="border border-gray-300 px-4 py-2">Product</th>
+              {/* <th className="border border-gray-300 px-4 py-2">Product</th> */}
               <th className="border border-gray-300 px-4 py-2">Submitted At</th>
               <th className="border border-gray-300 px-4 py-2">
                 Send Response
@@ -120,9 +120,9 @@ const ManageProductQuery = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {item.phone}
                 </td>
-                <td className="border border-gray-300 px-4 py-2  md:break-words md:max-w-xs">
+                {/* <td className="border border-gray-300 px-4 py-2  md:break-words md:max-w-xs">
                   {item.productName}
-                </td>
+                </td> */}
                 <td className="border border-gray-300 px-4 py-2 text-nowrap">
                   {new Date(item.submittedAt).toLocaleString("en-IN", {
                     day: "2-digit",
@@ -140,10 +140,10 @@ const ManageProductQuery = () => {
                     Send Response
                   </button>
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
+                <td className=" border border-gray-300 p-4">
                   <div
                     onClick={() => handleDelete(item._id)}
-                    className="bg-red-500 hover:bg-red-600 text-black cursor-pointer px-4 py-4 rounded"
+                    className="flex flex-row items-center justify-center bg-red-500 hover:bg-red-600 text-black cursor-pointer p-4 rounded"
                   >
                     <MdDelete />
                   </div>
@@ -183,6 +183,7 @@ const ManageProductQuery = () => {
         <ResponseModal
           isOpen={isResponseModalOpen}
           onClose={closeResponseModal}
+          products={selectedQueryForResponse.products}
           queryId={selectedQueryForResponse._id}
           customerName={selectedQueryForResponse.name}
           customerEmail={selectedQueryForResponse.email}
