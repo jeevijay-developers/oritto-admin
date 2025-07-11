@@ -94,7 +94,7 @@ const sidebar = [
       },
       {
         name: "Manage Blogs",
-        path: "",
+        path: "/home/blogs/manage-blogs/",
       },
     ],
   },
