@@ -82,6 +82,23 @@ const sidebar = [
     ],
   },
   {
+    name: "Offers",
+    links: [
+      {
+        name: "Add Offer",
+        path: "/home/blogs/create-blog/",
+      },
+      {
+        name: "List Offers",
+        path: "/home/blogs/list-blogs/",
+      },
+      {
+        name: "Manage Offers",
+        path: "",
+      },
+    ],
+  },
+  {
     name: "Blogs",
     links: [
       {

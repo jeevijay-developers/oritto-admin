@@ -1,8 +1,8 @@
-import UnderDevelopment from "@/components/UnderDevelopment";
+import ManageAttributes from "@/components/attributes/ManageAttributes";
 import React from "react";
 
 const Page = () => {
-  return <UnderDevelopment />;
+  return <ManageAttributes />;
 };
 
 export default Page;

@@ -7,6 +7,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { confirmDelete } from "@/confirm-alert/CategoryUpdate";
 import { deleteProductById } from "@/server/admin";
 import { toast } from "react-toast";
+import { FaEdit } from "react-icons/fa";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 const ManageProducts = () => {
   const [products, setProducts] = useState([]);
@@ -63,6 +64,7 @@ const ManageProducts = () => {
                   <th className="p-4 border-b">Visible</th>
                   <th className="p-4 border-b">Edit</th>
                   <th className="p-4 border-b">Delete</th>
+                  <th className="p-4 border-b">Specifications</th>
                 </tr>
               </thead>
               <tbody>
@@ -117,6 +119,15 @@ const ManageProducts = () => {
                           confirmAlert(confirmDelete(p._id, deleteProduct))
                         }
                       />
+                    </td>
+                    <td>
+                      <Link
+                        className="flex flex-row gap-2"
+                        href={`/home/products/specifications/update/${p._id}`}
+                      >
+                        <FaEdit className="text-2xl hover:cursor-pointer" />{" "}
+                        specifications
+                      </Link>
                     </td>
                   </tr>
                 ))}

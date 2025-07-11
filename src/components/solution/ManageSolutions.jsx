@@ -7,6 +7,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { confirmDelete } from "@/confirm-alert/CategoryUpdate";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import Link from "next/link";
+import { toast } from "react-toast";
 const ManageSolutions = () => {
   const [solutions, setSolutions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,9 +29,10 @@ const ManageSolutions = () => {
     fetchSolutions();
   }, []);
 
-  const deleteSolution = async (id) => {
+  const deleteSolution = async (name) => {
     try {
-      const res = await deleteSolutionById(id);
+      const res = await deleteSolutionById(name.name);
+
       toast.success("Solution deleted successfully");
     } catch (err) {
       console.log(err);

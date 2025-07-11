@@ -202,3 +202,49 @@ export const deleteSolutionById = async (id) => {
     throw err;
   }
 };
+
+export const getAttributeById = async (id) => {
+  try {
+    const res = await apiClient.get(`/v1/attributes/get-attribute-by-id/${id}`);
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateAttributeById = async (id, data) => {
+  try {
+    const res = await apiClient.put(
+      `/v1/attributes/update-attribute-by-id/${id}`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const deleteAttributeById = async (id) => {
+  try {
+    const res = await apiClient.delete(
+      `/v1/attributes/delete-attribute-by-id/${id}`
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const addMechanicalFeaturesToProduct = async (id, data) => {
+  console.log(data);
+
+  try {
+    const res = await apiClient.post(
+      `/v1/products/products/${id}/mechanical-features`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
