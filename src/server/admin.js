@@ -248,3 +248,23 @@ export const addMechanicalFeaturesToProduct = async (id, data) => {
     throw err;
   }
 };
+
+export const handleDelete = async (id) => {
+  try {
+    const res = await apiClient.delete(`/blogs/deleteBlog/${id}`);
+    return res.data;
+  } catch (err) {
+    console.error("Delete error:", err);
+    alert("Something went wrong.");
+  }
+};
+
+export const fetchBlogs = async () => {
+  try {
+    const res = await apiClient.get(`/blogs/getAllBlogs/`);
+
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching blogs:", err);
+  }
+};
