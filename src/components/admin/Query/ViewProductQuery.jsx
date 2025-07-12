@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { getAllProductQuery } from "../../../server/common";
-import "./Query.css";
 import MessageModal from "./MessageModal";
 const ViewProductQuery = () => {
   const [query, setQuery] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); 
   const [totalPages, setTotalPages] = useState(1);
   const [selectedMessage, setSelectedMessage] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const limit = 5;
 
@@ -34,6 +34,7 @@ const ViewProductQuery = () => {
   const handleUpdate = (id) => {
     const selectedQuery = query.find((item) => item._id === id);
     setSelectedMessage(selectedQuery.message);
+    setSelectedProduct(selectedQuery.products);
     setIsModalOpen(true);
   };
 
@@ -43,7 +44,7 @@ const ViewProductQuery = () => {
   };
 
   return (
-    <div className="overflow-x-auto w-full  p-4">
+    <div className="overflow-x-auto w-full cursor-pointer  p-4">
       <div className="max-w-sm sm:max-w-sm md:max-w-md lg:max-w-3xl xl:max-w-7xl">
         <table className="table-auto w-full border-collapse border border-gray-300">
           <thead>
@@ -52,9 +53,8 @@ const ViewProductQuery = () => {
               <th className="border border-gray-300 px-4 py-2">Name</th>
               <th className="border border-gray-300 px-4 py-2">Email</th>
               <th className="border border-gray-300 px-4 py-2">Phone</th>
-              <th className="border border-gray-300 px-4 py-2">Product</th>
               <th className="border border-gray-300 px-4 py-2">Submitted At</th>
-              <th className="border border-gray-300 px-4 py-2">Message</th>
+              <th className="border border-gray-300 px-4 py-2">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -72,9 +72,6 @@ const ViewProductQuery = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {item.phone}
                 </td>
-                <td className="border border-gray-300 px-4 py-2 break-words max-w-xs">
-                  {item.productName}
-                </td>
 
                 <td className="border border-gray-300 px-4 py-2 text-nowrap">
                   {new Date(item.submittedAt).toLocaleString("en-IN", {
@@ -90,7 +87,7 @@ const ViewProductQuery = () => {
                     onClick={() => handleUpdate(item._id)}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded "
                   >
-                    View Message
+                    View More
                   </button>
                 </td>
               </tr>
@@ -108,23 +105,27 @@ const ViewProductQuery = () => {
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          nextClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
           forcePage={currentPage}
+          containerClassName="flex gap-2 list-none p-0"
+          pageClassName=""
+          pageLinkClassName="px-3 py-1 border border-gray-300 rounded hover:bg-gray-200 text-gray-800"
+          previousClassName=""
+          previousLinkClassName="px-3 py-1 border border-gray-300 rounded hover:bg-gray-200 text-gray-800"
+          nextClassName=""
+          nextLinkClassName="px-3 py-1 border border-gray-300 rounded hover:bg-gray-200 text-gray-800"
+          breakClassName=""
+          breakLinkClassName="px-3 py-1 border border-gray-300 rounded text-gray-800"
+          activeClassName="bg-blue-500 text-white border-blue-500"
         />
       </div>
 
       {/* Modal */}
       {isModalOpen && (
-        <MessageModal message={selectedMessage} onClose={closeModal} />
+        <MessageModal
+          message={selectedMessage}
+          selectedProduct={selectedProduct}
+          onClose={closeModal}
+        />
       )}
     </div>
   );
