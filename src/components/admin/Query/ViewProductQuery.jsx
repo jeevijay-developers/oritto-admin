@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { getAllProductQuery } from "../../../server/common";
-import "./Query.css";
 import MessageModal from "./MessageModal";
 const ViewProductQuery = () => {
   const [query, setQuery] = useState([]);
@@ -45,7 +44,7 @@ const ViewProductQuery = () => {
   };
 
   return (
-    <div className="overflow-x-auto w-full  p-4">
+    <div className="overflow-x-auto w-full cursor-pointer  p-4">
       <div className="max-w-sm sm:max-w-sm md:max-w-md lg:max-w-3xl xl:max-w-7xl">
         <table className="table-auto w-full border-collapse border border-gray-300">
           <thead>
@@ -106,17 +105,17 @@ const ViewProductQuery = () => {
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          nextClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
           forcePage={currentPage}
+          containerClassName="flex gap-2 list-none p-0"
+          pageClassName=""
+          pageLinkClassName="px-3 py-1 border border-gray-300 rounded hover:bg-gray-200 text-gray-800"
+          previousClassName=""
+          previousLinkClassName="px-3 py-1 border border-gray-300 rounded hover:bg-gray-200 text-gray-800"
+          nextClassName=""
+          nextLinkClassName="px-3 py-1 border border-gray-300 rounded hover:bg-gray-200 text-gray-800"
+          breakClassName=""
+          breakLinkClassName="px-3 py-1 border border-gray-300 rounded text-gray-800"
+          activeClassName="bg-blue-500 text-white border-blue-500"
         />
       </div>
 
