@@ -50,7 +50,23 @@ const sidebar = [
       },
     ],
   },
-
+  {
+    name: "Solar",
+    links: [
+      {
+        name: "Add Solar",
+        path: "/home/solar/add-solar",
+      },
+      {
+        name: "List Solar",
+        path: "/home/solar/list-solar",
+      },
+      {
+        name: "Manage Solar",
+        path: "/home/solar/manage-solar",
+      },
+    ],
+  },
   {
     name: "Products",
     links: [

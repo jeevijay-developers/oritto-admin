@@ -268,3 +268,52 @@ export const fetchBlogs = async () => {
     console.error("Error fetching blogs:", err);
   }
 };
+
+export const fetchAllSolar = async () => {
+  try {
+    const res = await apiClient.get(`/v1/solar/get-all-solar`);
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching solar products:", err);
+  }
+};
+
+export const addSolar = async (data) => {
+  try {
+    const res = await apiClient.post(`/v1/solar/create-solar`, data);
+    return res.data;
+  } catch (err) {
+    console.error("Error adding solar product:", err);
+    throw err;
+  }
+};
+
+export const deleteSolarById = async (id) => {
+  try {
+    const res = await apiClient.delete(`/v1/solar/delete-solar/${id}`);
+    return res.data;
+  } catch (err) {
+    console.error("Error deleting solar product:", err);
+    throw err;
+  }
+};
+
+export const getSolarById = async (id) => {
+  try {
+    const res = await apiClient.get(`/v1/solar/get-solar/${id}`);
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching solar product by ID:", err);
+    throw err;
+  }
+};
+
+export const updateSolarById = async (id, data) => {
+  try {
+    const res = await apiClient.put(`/v1/solar/update-solar/${id}`, data);
+    return res.data;
+  } catch (err) {
+    console.error("Error updating solar product by ID:", err);
+    throw err;
+  }
+};
